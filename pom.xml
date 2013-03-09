@@ -4,7 +4,7 @@
 
 	<groupId>com.github.verylazyboy</groupId>
 	<artifactId>sablecc-maven-port</artifactId>
-	<version>3.7-SNAPSHOT</version>
+	<version>3.7</version>
 	
 	<name>sablecc-maven-portt</name>
 	<description>
@@ -34,7 +34,7 @@
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public</name>
-			<url></url>
+			<url>https://raw.github.com/verylazyboy/sablecc-maven-port/master/LICENSE-SableCC</url>
 			<distribution>repo</distribution>
 		</license>
 
