@@ -6,7 +6,7 @@
 	<artifactId>sablecc-maven-port</artifactId>
 	<version>3.7</version>
 	
-	<name>sablecc-maven-portt</name>
+	<name>sablecc-maven-port</name>
 	<description>
 		Redistribute the SablCC 3.x in a Maven-like Style 
 	</description>

@@ -122,6 +122,7 @@ The target compile was called.
 	<target name="mavenclean" depends="clean" description="clean up">
 		<delete dir="${build}" />
 		<delete dir="${dist}" />
+		<delete file="../pom.xml.asc" />
 	</target>
 
 </project>
