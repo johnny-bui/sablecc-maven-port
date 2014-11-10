@@ -24,13 +24,13 @@
 
         <!-- defined maven snapshots and staging repository id and url -->
 	<property name="maven-snapshots-repository-id" 
-				value="sonatype-nexus-snapshots" />
+				value="newton-snapshots" />
 	<property name="maven-snapshots-repository-url" 
-				value="https://oss.sonatype.org/content/repositories/snapshots/" />
+				value="http://newton.htw-saarland.de:8085/artifactory/ext-snapshot-local" />
 	<property name="maven-staging-repository-id" 
-				value="sonatype-nexus-staging" />
+				value="newton-releases" />
 	<property name="maven-staging-repository-url" 
-				value="https://oss.sonatype.org/service/local/staging/deploy/maven2/" />
+				value="http://newton.htw-saarland.de:8085/artifactory/ext-release-local" />
 
 
 	<target name="maveninit">
