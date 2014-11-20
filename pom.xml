@@ -1,77 +1,78 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.verylazyboy</groupId>
-	<artifactId>sablecc-maven-port</artifactId>
-	<version>3.7</version>
+    <groupId>com.github.verylazyboy</groupId>
+    <artifactId>sablecc-maven-port</artifactId>
+    <version>3.7</version>
 	
-	<name>sablecc-maven-port</name>
-	<description>
-		Redistribute the SablCC 3.x in a Maven-like Style 
-	</description>
-	<url>https://github.com/verylazyboy/maven-plugin/tree/master/sablecc-maven-port</url>
+    <name>sablecc-maven-port</name>
+    <description>
+        Redistribute the SablCC 3.x in a Maven-like Style 
+    </description>
+    <url>https://github.com/verylazyboy/maven-plugin/tree/master/sablecc-maven-port</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
 	
-	
-	<packaging>jar</packaging>
-	<distributionManagement>
-		<repository>
-			<id>newton</id>
-			<name>newton-releases</name>
-			<url>http://newton.htw-saarland.de:8085/artifactory/ext-release-local</url>
-		</repository>
-		<snapshotRepository>
-			<id>newton</id>
-			<name>newton-snapshots</name>
-			<url>http://newton.htw-saarland.de:8085/artifactory/ext-snapshot-local</url>
-		</snapshotRepository>
-	</distributionManagement>
-	
-	<developers>
-		<developer>
-			<name>Etienne Gagnon</name>
-			<email>egagnon@j-meg.com</email>
-			<roles>
-				<role>Founder and Author of SableCC</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Hong Phuc Bui aka. verylazyboy</name>
-			<email>phucluoi@gmail.com</email>
-			<roles>
-				<role>Redistribute the SablCC 3.x in a Maven-like Style</role>
-			</roles>
-		</developer>
-	</developers>
+    <packaging>jar</packaging>
+    <distributionManagement>
+        <repository>
+            <id>newton</id>
+            <name>newton-releases</name>
+            <url>http://newton.htw-saarland.de:8085/artifactory/ext-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>newton</id>
+            <name>newton-snapshots</name>
+            <url>http://newton.htw-saarland.de:8085/artifactory/ext-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <developers>
+        <developer>
+            <name>Etienne Gagnon</name>
+            <email>egagnon@j-meg.com</email>
+            <roles>
+                <role>Founder and Author of SableCC</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Hong Phuc Bui aka. verylazyboy</name>
+            <email>phucluoi@gmail.com</email>
+            <roles>
+                <role>Redistribute the SablCC 3.x in a Maven-like Style</role>
+            </roles>
+        </developer>
+    </developers>
 
-	<licenses>
-		<license>
-			<name>GNU Lesser General Public</name>
-			<url>https://raw.github.com/verylazyboy/sablecc-maven-port/master/LICENSE-SableCC</url>
-			<distribution>repo</distribution>
-		</license>
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public</name>
+            <url>https://raw.github.com/verylazyboy/sablecc-maven-port/master/LICENSE-SableCC</url>
+            <distribution>repo</distribution>
+        </license>
 
-		<license>
-			<name>The BSD 3-Clause License (For this pom.xml and the ant script maven-build.xml)</name>
-			<url>http://opensource.org/licenses/BSD-3-Clause</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+        <license>
+            <name>The BSD 3-Clause License (For this pom.xml and the ant script maven-build.xml)</name>
+            <url>http://opensource.org/licenses/BSD-3-Clause</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-	<scm>
-		<connection>scm:git:git@github.com:verylazyboy/sablecc-maven-port.git</connection>
-		<url>git@github.com:verylazyboy/sablecc-maven-port.git</url>
-		<developerConnection>scm:git@github.com:verylazyboy/sablecc-maven-port.git</developerConnection>
-	</scm>
+    <scm>
+        <connection>scm:git:git@github.com:verylazyboy/sablecc-maven-port.git</connection>
+        <url>git@github.com:verylazyboy/sablecc-maven-port.git</url>
+        <developerConnection>scm:git@github.com:verylazyboy/sablecc-maven-port.git</developerConnection>
+    </scm>
 	
-	<prerequisites>
-		<maven>3.0+</maven>
-	</prerequisites>
+    <prerequisites>
+        <maven>3.0+</maven>
+    </prerequisites>
 	
-	<inceptionYear>2013</inceptionYear>
+    <inceptionYear>2013</inceptionYear>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+	
 	
 </project>

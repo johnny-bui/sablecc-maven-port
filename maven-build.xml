@@ -1,129 +1,130 @@
 <project name="sablecc-maven-port" 
-	default="mavendeploy" 
-	basedir="./sablecc-3.7" 
-	xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+         default="mavendeploy" 
+         basedir="./sablecc-3.7" 
+         xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 
-	<import file="sablecc-3.7/build.xml"/>
+    <import file="sablecc-3.7/build.xml"/>
 
-	<property name="src" location="src" />
-	<property name="build" location="${classes.dir}" />
-	<property name="dist" location="${lib.dir}" />
+    <property name="src" location="src" />
+    <property name="build" location="${classes.dir}" />
+    <property name="dist" location="${lib.dir}" />
 
-	<!-- define Maven coordinates -->
-	<property name="groupId" value="com.github.verylazyboy" />
-	<property name="artifactId" value="sablecc" />
-	<property name="version" value="3.7-SNAPSHOT" />
+    <!-- define Maven coordinates -->
+    <property name="groupId" value="com.github.verylazyboy" />
+    <property name="artifactId" value="sablecc" />
+    <property name="version" value="3.7" />
 
-        <!-- define artifacts' name, which follows the convention of Maven -->
-	<property name="maven-jar" 
-				value="${dist}/maven-dist/${artifactId}-${version}.jar" />
-	<property name="maven-javadoc-jar" 
-				value="${dist}/maven-dist/${artifactId}-${version}-javadoc.jar" />
-	<property name="maven-sources-jar" 
-				value="${dist}/maven-dist/${artifactId}-${version}-sources.jar" />
+    <!-- define artifacts' name, which follows the convention of Maven -->
+    <property name="maven-jar" 
+                  value="${dist}/maven-dist/${artifactId}-${version}.jar" />
+    <property name="maven-javadoc-jar" 
+                  value="${dist}/maven-dist/${artifactId}-${version}-javadoc.jar" />
+    <property name="maven-sources-jar" 
+                  value="${dist}/maven-dist/${artifactId}-${version}-sources.jar" />
 
-        <!-- defined maven snapshots and staging repository id and url -->
-	<property name="maven-snapshots-repository-id" 
-				value="newton-snapshots" />
-	<property name="maven-snapshots-repository-url" 
-				value="http://newton.htw-saarland.de:8085/artifactory/ext-snapshot-local" />
-	<property name="maven-staging-repository-id" 
-				value="newton-releases" />
-	<property name="maven-staging-repository-url" 
-				value="http://newton.htw-saarland.de:8085/artifactory/ext-release-local" />
+    <!-- defined maven snapshots and staging repository id and url -->
+    <property name="maven-snapshots-repository-id" 
+                  value="newton-snapshots" />
+    <property name="maven-snapshots-repository-url" 
+                  value="http://newton.htw-saarland.de:8085/artifactory/ext-snapshot-local" />
+    <property name="maven-staging-repository-id" 
+                  value="newton-releases" />
+    <property name="maven-staging-repository-url" 
+                  value="http://newton.htw-saarland.de:8085/artifactory/ext-release-local" />
 
 
-	<target name="maveninit">
-	<echo>
-This target intentionally left blank.
-	</echo>
-		<!--
-		<mkdir dir="${build}" />
-		<mkdir dir="${dist}/lib" />
-		-->
-	</target>
+    <target name="maveninit">
+        <echo>
+            This target intentionally left blank.
+        </echo>
+        <!--
+        <mkdir dir="${build}" />
+        <mkdir dir="${dist}/lib" />
+        -->
+    </target>
 
-	<target name="mavencompile" depends="maveninit,compile" description="compile the source ">
-		<!-- javac srcdir="${src}" destdir="${build}" /-->
-		<echo>
-==========================================================
-The target compile was called.
-==========================================================
-		</echo>
-	</target>
+    <target name="mavencompile" depends="maveninit,compile" description="compile the source ">
+        <!-- javac srcdir="${src}" destdir="${build}" /-->
+        <echo>
+            ==========================================================
+            The target compile was called.
+            ==========================================================
+        </echo>
+    </target>
 
-	<target name="mavendist" depends="mavencompile,jar" description="generate the distribution">
+    <target name="mavendist" depends="mavencompile,jar" description="generate the distribution">
 
-		<!-- build the main artifact -->
-		<jar jarfile="${maven-jar}" basedir="${build}" manifest="${manifest}" />
+        <!-- build the main artifact -->
+        <jar jarfile="${maven-jar}" basedir="${build}" manifest="${manifest}" />
       
 
-		<!-- build the javadoc artifact -->
-		<javadoc sourcepath="${src}" destdir="${dist}/javadoc" />
-		<jar jarfile="${maven-javadoc-jar}">
-			<fileset dir="${dist}/javadoc" />
-		</jar>
+        <!-- build the javadoc artifact -->
+        <javadoc sourcepath="${src}" destdir="${dist}/javadoc" />
+        <jar jarfile="${maven-javadoc-jar}">
+            <fileset dir="${dist}/javadoc" />
+        </jar>
 
-		<!-- build the sources artifact -->
-		<jar jarfile="${maven-sources-jar}">
-			<fileset dir="${src}" />
-		</jar>
-	</target>
+        <!-- build the sources artifact -->
+        <jar jarfile="${maven-sources-jar}">
+            <fileset dir="${src}" />
+        </jar>
+    </target>
 
-        <target name="mavendeploy" 
-				depends="mavendist" 
-				description="deploy snapshot version to Maven snapshot repository">
-		<artifact:mvn>
-			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
-			<arg value="-Durl=${maven-snapshots-repository-url}" />
-			<arg value="-DrepositoryId=${maven-snapshots-repository-id}" />
-			<arg value="-DpomFile=pom.xml" />
-			<arg value="-Dfile=${maven-jar}" />
-		</artifact:mvn>
-        </target>
+    <target name="mavendeploy" 
+                depends="mavendist" 
+                description="deploy snapshot version to Maven snapshot repository">
+        <artifact:mvn>
+            <arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+            <arg value="-Durl=${maven-staging-repository-url}" />
+            <arg value="-DrepositoryId=${maven-staging-repository-id}" />
+            <arg value="-DpomFile=pom.xml" />
+            <arg value="-Dfile=${maven-jar}" />
+            <arg value="-DrepositoryId=newton" />
+        </artifact:mvn>
+    </target>
 
-        <!-- before this, update project version (both build.xml and pom.xml) from SNAPSHOT to RELEASE -->
-	<target name="mavenstage" 
-			depends="mavendist" 
-			description="deploy release version to Maven staging repository">
-		<!-- sign and deploy the main artifact -->
-		<artifact:mvn>
-			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
-			<arg value="-Durl=${maven-staging-repository-url}" />
-			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
-			<arg value="-DpomFile=pom.xml" />
-			<arg value="-Dfile=${maven-jar}" />
-                        <arg value="-Pgpg" />
-		</artifact:mvn>
+    <!-- before this, update project version (both build.xml and pom.xml) from SNAPSHOT to RELEASE Problem by key + sign -->
+    <target name="mavenstage" 
+                depends="mavendist" 
+                description="deploy release version to Maven staging repository">
+        <!-- sign and deploy the main artifact -->
+        <artifact:mvn>
+            <arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+            <arg value="-Durl=${maven-staging-repository-url}" />
+            <arg value="-DrepositoryId=${maven-staging-repository-id}" />
+            <arg value="-DpomFile=pom.xml" />
+            <arg value="-Dfile=${maven-jar}" />
+            <arg value="-Pgpg" />
+        </artifact:mvn>
 
-		<!-- sign and deploy the sources artifact -->
-		<artifact:mvn>
-			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
-			<arg value="-Durl=${maven-staging-repository-url}" />
-			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
-			<arg value="-DpomFile=pom.xml" />
-			<arg value="-Dfile=${maven-sources-jar}" />
-			<arg value="-Dclassifier=sources" />
-                        <arg value="-Pgpg" />
-		</artifact:mvn>
+        <!-- sign and deploy the sources artifact -->
+        <artifact:mvn>
+            <arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+            <arg value="-Durl=${maven-staging-repository-url}" />
+            <arg value="-DrepositoryId=${maven-staging-repository-id}" />
+            <arg value="-DpomFile=pom.xml" />
+            <arg value="-Dfile=${maven-sources-jar}" />
+            <arg value="-Dclassifier=sources" />
+            <arg value="-Pgpg" />
+        </artifact:mvn>
 
-		<!-- sign and deploy the javadoc artifact -->
-		<artifact:mvn>
-			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
-			<arg value="-Durl=${maven-staging-repository-url}" />
-			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
-			<arg value="-DpomFile=pom.xml" />
-			<arg value="-Dfile=${maven-javadoc-jar}" />
-			<arg value="-Dclassifier=javadoc" />
-                        <arg value="-Pgpg" />
-		</artifact:mvn>
-	</target>
+        <!-- sign and deploy the javadoc artifact -->
+        <artifact:mvn>
+            <arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+            <arg value="-Durl=${maven-staging-repository-url}" />
+            <arg value="-DrepositoryId=${maven-staging-repository-id}" />
+            <arg value="-DpomFile=pom.xml" />
+            <arg value="-Dfile=${maven-javadoc-jar}" />
+            <arg value="-Dclassifier=javadoc" />
+            <arg value="-Pgpg" />
+        </artifact:mvn>
+    </target>
 
-	<target name="mavenclean" depends="clean" description="clean up">
-		<delete dir="${build}" />
-		<delete dir="${dist}" />
-		<delete file="../pom.xml.asc" />
-	</target>
+    <target name="mavenclean" depends="clean" description="clean up">
+        <delete dir="${build}" />
+        <delete dir="${dist}" />
+        <delete file="../pom.xml.asc" />
+    </target>
 
 </project>
 
