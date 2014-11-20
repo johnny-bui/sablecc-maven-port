@@ -24,14 +24,18 @@
 
     <!-- defined maven snapshots and staging repository id and url -->
     <property name="maven-snapshots-repository-id" 
-                  value="newton-snapshots" />
+                  value="newton" />
     <property name="maven-snapshots-repository-url" 
-                  value="http://newton.htw-saarland.de:8085/artifactory/ext-snapshot-local" />
+                  value="${maven.snapshot.repo}" />
+    <!--property name="maven-snapshots-repository-url" 
+                  value="http://newton.htw-saarland.de:8085/artifactory/ext-snapshot-local" /-->
     <property name="maven-staging-repository-id" 
-                  value="newton-releases" />
+                  value="newton" />
     <property name="maven-staging-repository-url" 
-                  value="http://newton.htw-saarland.de:8085/artifactory/ext-release-local" />
+                  value="${maven.release.repo}" />
 
+    <!--property name="maven-staging-repository-url" 
+                  value="http://newton.htw-saarland.de:8085/artifactory/ext-release-local" /-->
 
     <target name="maveninit">
         <echo>
@@ -70,53 +74,56 @@
         </jar>
     </target>
 
-    <target name="mavendeploy" 
+    <target name="maven-deploy-snapshot" 
                 depends="mavendist" 
                 description="deploy snapshot version to Maven snapshot repository">
         <artifact:mvn>
             <arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
-            <arg value="-Durl=${maven-staging-repository-url}" />
-            <arg value="-DrepositoryId=${maven-staging-repository-id}" />
+            <arg value="-Pgpg" />
+            <arg value="-Durl=${maven-snapshots-repository-url}" />
+            <arg value="-DrepositoryId=${maven-snapshots-repository-id}" />
             <arg value="-DpomFile=pom.xml" />
             <arg value="-Dfile=${maven-jar}" />
             <arg value="-DrepositoryId=newton" />
+            <arg value="-Dversion=${version}-SNAPSHOT" />
         </artifact:mvn>
     </target>
 
-    <!-- before this, update project version (both build.xml and pom.xml) from SNAPSHOT to RELEASE Problem by key + sign -->
+    <!-- before this, update project version (both build.xml and pom.xml) from SNAPSHOT to RELEASE 
+	Problem by key + sign -->
     <target name="mavenstage" 
                 depends="mavendist" 
                 description="deploy release version to Maven staging repository">
         <!-- sign and deploy the main artifact -->
         <artifact:mvn>
             <arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+            <arg value="-Pgpg" />
             <arg value="-Durl=${maven-staging-repository-url}" />
             <arg value="-DrepositoryId=${maven-staging-repository-id}" />
             <arg value="-DpomFile=pom.xml" />
             <arg value="-Dfile=${maven-jar}" />
-            <arg value="-Pgpg" />
         </artifact:mvn>
 
         <!-- sign and deploy the sources artifact -->
         <artifact:mvn>
             <arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+            <arg value="-Pgpg" />
             <arg value="-Durl=${maven-staging-repository-url}" />
             <arg value="-DrepositoryId=${maven-staging-repository-id}" />
             <arg value="-DpomFile=pom.xml" />
             <arg value="-Dfile=${maven-sources-jar}" />
             <arg value="-Dclassifier=sources" />
-            <arg value="-Pgpg" />
         </artifact:mvn>
 
         <!-- sign and deploy the javadoc artifact -->
         <artifact:mvn>
             <arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+            <arg value="-Pgpg" />
             <arg value="-Durl=${maven-staging-repository-url}" />
             <arg value="-DrepositoryId=${maven-staging-repository-id}" />
             <arg value="-DpomFile=pom.xml" />
             <arg value="-Dfile=${maven-javadoc-jar}" />
             <arg value="-Dclassifier=javadoc" />
-            <arg value="-Pgpg" />
         </artifact:mvn>
     </target>
 
