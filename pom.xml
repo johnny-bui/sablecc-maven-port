@@ -1,67 +1,194 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.verylazyboy</groupId>
-    <artifactId>sablecc-maven-port</artifactId>
-    <version>3.7</version>
+	<groupId>com.github.verylazyboy</groupId>
+	<artifactId>sablecc-maven-port</artifactId>
+	<version>3.7</version>
 	
-    <name>sablecc-maven-port</name>
-    <description>
-        Redistribute the SablCC 3.x in a Maven-like Style 
-    </description>
-    <url>https://github.com/verylazyboy/maven-plugin/tree/master/sablecc-maven-port</url>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+	<name>sablecc-maven-port</name>
+	<description>
+		Redistribute the SablCC 3.x in a Maven-like Style 
+	</description>
+	<url>https://github.com/verylazyboy/maven-plugin/tree/master/sablecc-maven-port</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		
+		<sablecc.base>${project.basedir}/sablecc-3.7</sablecc.base>
+	</properties>
 	
-    <packaging>jar</packaging>
+	<packaging>jar</packaging>
     
-    <developers>
-        <developer>
-            <name>Etienne Gagnon</name>
-            <email>egagnon@j-meg.com</email>
-            <roles>
-                <role>Founder and Author of SableCC</role>
-            </roles>
-        </developer>
-        <developer>
-            <name>Hong Phuc Bui aka. verylazyboy</name>
-            <email>phucluoi@gmail.com</email>
-            <roles>
-                <role>Redistribute the SablCC 3.x in a Maven-like Style</role>
-            </roles>
-        </developer>
-    </developers>
+	<developers>
+		<developer>
+			<name>Etienne Gagnon</name>
+			<email>egagnon@j-meg.com</email>
+			<roles>
+				<role>Founder and Author of SableCC</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Hong Phuc Bui aka. verylazyboy</name>
+			<email>phucluoi@gmail.com</email>
+			<roles>
+				<role>Redistribute the SablCC 3.x in a Maven-like Style</role>
+			</roles>
+		</developer>
+	</developers>
 
-    <licenses>
-        <license>
-            <name>GNU Lesser General Public</name>
-            <url>https://raw.github.com/verylazyboy/sablecc-maven-port/master/LICENSE-SableCC</url>
-            <distribution>repo</distribution>
-        </license>
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public</name>
+			<url>https://raw.github.com/verylazyboy/sablecc-maven-port/master/LICENSE-SableCC</url>
+			<distribution>repo</distribution>
+		</license>
 
-        <license>
-            <name>The BSD 3-Clause License (For this pom.xml and the ant script maven-build.xml)</name>
-            <url>http://opensource.org/licenses/BSD-3-Clause</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+		<license>
+			<name>The BSD 3-Clause License (For this pom.xml and the ant script maven-build.xml)</name>
+			<url>http://opensource.org/licenses/BSD-3-Clause</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
-    <scm>
-        <connection>scm:git:git@github.com:verylazyboy/sablecc-maven-port.git</connection>
-        <url>git@github.com:verylazyboy/sablecc-maven-port.git</url>
-        <developerConnection>scm:git@github.com:verylazyboy/sablecc-maven-port.git</developerConnection>
-    </scm>
+	<scm>
+		<connection>scm:git:git@github.com:verylazyboy/sablecc-maven-port.git</connection>
+		<url>git@github.com:verylazyboy/sablecc-maven-port.git</url>
+		<developerConnection>scm:git@github.com:verylazyboy/sablecc-maven-port.git</developerConnection>
+	</scm>
 	
-    <prerequisites>
-        <maven>3.0+</maven>
-    </prerequisites>
 	
-    <inceptionYear>2013</inceptionYear>
+	<distributionManagement>
+		<repository>
+			<id>newton</id>
+			<name>newton-releases</name>
+			<url>${maven.release.repo}</url>
+		</repository>
+		<snapshotRepository>
+			<id>newton</id>
+			<name>newton-snapshots</name>
+			<url>${maven.snapshot.repo}</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	
+	<prerequisites>
+		<maven>3.0+</maven>
+	</prerequisites>
+	
+	<inceptionYear>2013</inceptionYear>
 
-	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.0</version>
+				<executions>
+					<execution>
+						<id>default-compile</id>
+						<phase>nerver</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.sun</groupId>
+						<artifactId>tools</artifactId>
+						<version>1.8.0</version>
+						<scope>system</scope>
+						<systemPath>${env.JAVA_HOME}/lib/tools.jar</systemPath>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<property name="manifest" value="${sablecc.base}/etc/manifest"/>
+								<property name="maven-jar" value="${project.build.directory}/${project.artifactId}-${project.version}.jar"/>
+								<property name="maven-javadoc-jar" value="${project.build.directory}/${project.artifactId}-${project.version}-javadoc.jar" />
+								<property name="maven-sources-jar" 
+										  value="${project.build.directory}/${project.artifactId}-${project.version}-sources.jar" />
+								
+								<ant antfile="${sablecc.base}/build.xml" dir="${sablecc.base}">
+									<target name="compile"/>
+								</ant>
+								
+								<!-- build the sources artifact -->
+								<!--
+								<jar jarfile="${maven-sources-jar}">
+									<fileset dir="${sablecc.base}/src" />
+								</jar>
+								-->
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<classesDirectory>${sablecc.base}/classes</classesDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<classesDirectory>${sablecc.base}/src</classesDirectory>
+							<classifier>sources</classifier>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<configuration>
+					<additionalparam>-Xdoclint:none</additionalparam>
+					<sourcepath>${sablecc.base}/src</sourcepath>
+					<classifier>javadoc</classifier>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+		</plugins>
+	</build>
 	
 </project>

@@ -2,9 +2,9 @@ To build the jar files:
 #######################
 ant -f maven-build.xml mavendist
 
-To deploy snapshot (not sign requered) 
+To deploy snapshot (not sign required) 
 ######################################
-The property "maven.snapshot.repo" must be confiurated in settings.xml. Then call
+The property "maven.snapshot.repo" must be configured in settings.xml. Then call
 
 ant -f maven-build.xml maven-deploy-snapshot
 
@@ -14,11 +14,11 @@ To deploy release (sign requered)
 
 1. Config your settings.xml
 
-In the $HOME/.m2/settings.xml you need a server with the ID "newton" like:
+In the $HOME/.m2/settings.xml you need a server with the ID "gpg" like:
 
 	<servers>
 		<server>
-			<id>newton</id>
+			<id>gpg</id>
 			<username>your user name</password>
 			<password>your private password</password>
 		</server>
@@ -42,7 +42,7 @@ and the profile gpg with these config:
 
 2. Call
 
-ant -f maven-build.xml mavestage
+ant -f maven-build.xml mavenstage
 
 That all
 
